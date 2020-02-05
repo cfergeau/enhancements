@@ -3,9 +3,14 @@ title: Cluster Profiles
 authors:
   - "@csrwng"
 reviewers:
-  - TBD
+  - "@abhinavdahiya"
+  - "@crawford"
+  - "@sdodson"
+  - "@derekwaynecarr"
+  - "@smarterclayton"
 approvers:
-  - TBD
+  - "@derekwaynecarr"
+  - "@smarterclayton"
 creation-date: 2020-02-04
 last-updated: 2019-02-04
 status: implementable
