@@ -38,12 +38,9 @@ manifests for each supported profile.
 
 ## Motivation
 
-In order to support different deployment models in which not all operators rendered by
-the CVO by default are needed, a mechanism is needed by which we tell the CVO which 
-manifests to include or exclude. One such deployment is the hosted control plane case
-in which the control plane components and corresponding operators should not be rendered
-by the CVO.
-
+To support different a deployment model in which not all operators rendered by
+the CVO by default are needed. This includes IBM Public Cloud, in which a 
+hosted control plane is used. Potentially it can also be used for Code Ready Containers.
 
 ### Goals
 
@@ -70,31 +67,26 @@ worker nodes instead of master nodes.
 A cluster profile is specified to the CVO as an identifier in an environment
 variable. For a given cluster, only one CVO profile may be in effect.
 
+NOTE: The mechanism by which the environment variable is set on the CVO deployment is 
+out of the scope of this design.
+
 ```
 CLUSTER_PROFILE=[identifier]
 ```
 This environment variable would have to be specified in the CVO deployment. When
-no `CLUSTER_PROFILE=[identifier]` variable is specified, the default cluster profile
+no `CLUSTER_PROFILE=[identifier]` variable is specified, the `default` cluster profile
 is in effect.
 
-The following annotations may be used to include/exclude manifests for a given profile:
+The following annotation may be used to include manifests for a given profile:
 
 ```
-exclude.release.openshift.io/[identifier]=true
-```
-This would exclude the manifest from rendering when `CLUSTER_PROFILE=[identifier]`
-has been specified. For the default cluster profile, manifests that contain only
-exclude annotations are always included.
-
-```
-include.release.openshift.io/[identifier]=false
+include.release.openshift.io/[identifier]=true
 ```
 This would make the CVO render this manifest only when `CLUSTER_PROFILE=[identifier]`
-has been specified. For the default cluster profile (no `CLUSTER_PROFILE` variable), 
-manifests that have any include annotation will always be excluded.
+has been specified. 
 
-Manifests may support inclusion/exclusion of multiple profiles by including as many of
-these annotations as needed.
+Manifests may support inclusion in multiple profiles by including as many of these annotations
+as needed.
 
 For items such as node selectors that need to vary based on a profile, different manifests
 will need to be created to support each variation in the node selector. This feature will
