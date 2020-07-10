@@ -31,7 +31,7 @@ superseded-by:
 
 ## Summary
 
-Cluster profiles are a way to support different deployment models for OpenShift clusters. 
+Cluster profiles are a way to support different deployment models for OpenShift clusters.
 A profile is an identifier that the Cluster Version Operator uses to determine
 which manifests to apply. Operators can be excluded completely or can have different
 manifests for each supported profile.
@@ -39,7 +39,7 @@ manifests for each supported profile.
 ## Motivation
 
 To support different a deployment model in which not all operators rendered by
-the CVO by default are needed. This includes IBM Public Cloud, in which a 
+the CVO by default are needed. This includes IBM Public Cloud, in which a
 hosted control plane is used. Potentially it can also be used for Code Ready Containers.
 
 ### Goals
@@ -67,7 +67,7 @@ worker nodes instead of master nodes.
 A cluster profile is specified to the CVO as an identifier in an environment
 variable. For a given cluster, only one CVO profile may be in effect.
 
-NOTE: The mechanism by which the environment variable is set on the CVO deployment is 
+NOTE: The mechanism by which the environment variable is set on the CVO deployment is
 out of the scope of this design.
 
 ```
@@ -83,13 +83,13 @@ The following annotation may be used to include manifests for a given profile:
 include.release.openshift.io/[identifier]=true
 ```
 This would make the CVO render this manifest only when `CLUSTER_PROFILE=[identifier]`
-has been specified. 
+has been specified.
 
 Manifests may support inclusion in multiple profiles by including as many of these annotations
 as needed.
 
 For items such as node selectors that need to vary based on a profile, different manifests
 will need to be created to support each variation in the node selector. This feature will
-not support including/excluding sections of a manifest. In order to avoid drift and 
+not support including/excluding sections of a manifest. In order to avoid drift and
 maintenance burden, components may use a templating solution such as kustomize to generate
 the required manifests while keeping a single master source.
