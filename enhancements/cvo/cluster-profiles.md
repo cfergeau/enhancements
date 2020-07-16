@@ -40,7 +40,9 @@ manifests for each supported profile.
 
 To support different a deployment model in which not all operators rendered by
 the CVO by default are needed. This includes IBM Public Cloud, in which a
-hosted control plane is used. Potentially it can also be used for Code Ready Containers.
+hosted control plane is used. It's also useful for Code Ready Containers which
+runs a single node cluster with resource constraints, and needs to scale down
+some operands, or disable some unneeded operators.
 
 ### Goals
 
@@ -61,6 +63,10 @@ not applied by the CVO.
 #### Story 2
 As a user, I can create a cluster in which node selectors for certain operators target
 worker nodes instead of master nodes.
+
+### Story 3
+As a user, I can create a cluster in which some operands are scaled down to
+only one replica to lower resource usage in non-HA setups.
 
 ### Design
 
