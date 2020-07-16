@@ -70,26 +70,33 @@ only one replica to lower resource usage in non-HA setups.
 
 ### Design
 
-A cluster profile is specified to the CVO as an identifier in an environment
-variable. For a given cluster, only one CVO profile may be in effect.
+A cluster profile is specified to the CVO as an identifier in the
+`openshift-config/cluster-profile` configmap. For a given cluster, only one CVO
+profile may be in effect.
 
-NOTE: The mechanism by which the environment variable is set on the CVO deployment is
+NOTE: The mechanism by which the configmap is created/set is
 out of the scope of this design.
 
 ```
-CLUSTER_PROFILE=[identifier]
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-profile
+  namespace: openshift-config
+data:
+  profile: crc
 ```
-This environment variable would have to be specified in the CVO deployment. When
-no `CLUSTER_PROFILE=[identifier]` variable is specified, the `default` cluster profile
-is in effect.
+When the configmap does not exist, or when it does not contain a `profile` key, the `default`
+cluster profile is in effect.
 
 The following annotation may be used to include manifests for a given profile:
 
 ```
 include.release.openshift.io/[identifier]=true
 ```
-This would make the CVO render this manifest only when `CLUSTER_PROFILE=[identifier]`
-has been specified.
+
+This would make the CVO render this manifest only when the
+`openshift-config/cluster-profile` configmap has a `profile: crc` key.
 
 Manifests may support inclusion in multiple profiles by including as many of these annotations
 as needed.
