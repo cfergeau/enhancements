@@ -100,6 +100,10 @@ This would make the CVO render this manifest only when the
 
 Manifests may support inclusion in multiple profiles by including as many of these annotations
 as needed.
+When a manifest has no `include.release.openshift.io/[identifier]` annotations,
+it should be used for all profiles. In the future, this fallback mechanism may
+be removed and the presence of at least one
+`include.release.openshift.io/[identifier]` annotation may be made mandatory.
 
 For items such as node selectors that need to vary based on a profile, different manifests
 will need to be created to support each variation in the node selector. This feature will
